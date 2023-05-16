@@ -3,12 +3,12 @@ import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import Store from './pages/Store'
 import About from './pages/About'
-import { Fragment } from 'react'
 import Navbar from './components/Navbar'
+import { ShoppingCartProvider } from './context/ShoppingCartContext'
 
 function App() {
   return (
-    <Fragment>
+    <ShoppingCartProvider>
       <Navbar />
       <Container className='mb-4'>
         <Routes>
@@ -17,7 +17,7 @@ function App() {
           <Route path='/about' element={<About />} />
         </Routes>
       </Container>
-    </Fragment>
+    </ShoppingCartProvider>
   )
 }
 
