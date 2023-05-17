@@ -1,5 +1,6 @@
 import { PropsWithChildren, createContext, useContext, useState } from 'react'
 import ShoppingCart from '../components/ShoppingCart'
+import { useLocalStorage } from '../hooks/useLocalStorage'
 
 type ShoppingCartContext = {
   getItemQuantity: (id: number) => number
@@ -19,12 +20,16 @@ type CartItem = {
 
 const ShoppingCartContext = createContext({} as ShoppingCartContext)
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useShoppingCart() {
   return useContext(ShoppingCartContext)
 }
 
 export function ShoppingCartProvider({ children }: PropsWithChildren) {
-  const [cartItems, setCartItems] = useState<CartItem[]>([])
+  const [cartItems, setCartItems] = useLocalStorage<CartItem[]>(
+    'shopping-cart',
+    []
+  )
   const [isOpen, setIsOpen] = useState(false)
 
   const getItemQuantity = (id: number) => {
