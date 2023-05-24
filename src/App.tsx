@@ -5,6 +5,8 @@ import Store from './pages/Store'
 import About from './pages/About'
 import Navbar from './components/Navbar'
 import { ShoppingCartProvider } from './context/ShoppingCartContext'
+import Cart from './pages/Cart'
+// import Checkout from './components/Checkout'
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/store' element={<Store />} />
           <Route path='/about' element={<About />} />
+          {/* <Route path='/checkout' element={<Checkout />} /> */}
+          <Route path='/cart' element={<Cart />} />
         </Routes>
       </Container>
     </ShoppingCartProvider>

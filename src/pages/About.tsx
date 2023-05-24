@@ -1,5 +1,7 @@
+import AboutPage from '../components/AboutCmp'
+
 const About = () => {
-  return <div>About</div>
+  return <AboutPage />
 }
 
 export default About

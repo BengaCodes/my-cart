@@ -1,6 +1,7 @@
 import { PropsWithChildren, createContext, useContext, useState } from 'react'
 import ShoppingCart from '../components/ShoppingCart'
 import { useLocalStorage } from '../hooks/useLocalStorage'
+import storeItems from '../data/items.json'
 
 type ShoppingCartContext = {
   getItemQuantity: (id: number) => number
@@ -11,6 +12,8 @@ type ShoppingCartContext = {
   openCart: () => void
   closeCart: () => void
   cartItems: CartItem[]
+  totalPrice: number
+  clearCartItems: () => void
 }
 
 type CartItem = {
@@ -53,6 +56,16 @@ export function ShoppingCartProvider({ children }: PropsWithChildren) {
     })
   }
 
+  const clearCartItems = () => {
+    setCartItems([])
+  }
+
+  const totalPrice = cartItems?.reduce((acc, currItem) => {
+    const item = storeItems.find((item) => item.id === currItem.id)
+    const totalOfItem = item?.price ? item.price * currItem.quantity : 0
+    return totalOfItem + acc
+  }, 0)
+
   const increaseCartQuantity = (id: number) => {
     setCartItems((currItems) => {
       if (currItems.find((item) => item.id === id) == null) {
@@ -89,7 +102,9 @@ export function ShoppingCartProvider({ children }: PropsWithChildren) {
         quantity,
         cartItems,
         openCart,
-        closeCart
+        closeCart,
+        totalPrice,
+        clearCartItems
       }}
     >
       {children}
